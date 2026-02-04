@@ -1,0 +1,181 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>当你表达观点时，你更像哪一种人？</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #f3f3f3;
+            padding: 30px;
+            margin: 0; /* 清除默认外边距 */
+        }
+        .container {
+            max-width: 900px;
+            background: white;
+            padding: 40px;
+            margin: 0 auto; /* 居中 */
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* 增加一点阴影，更好看 */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #fff; /* 确保背景是白的 */
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 40px;
+            padding: 25px;
+            background: #e9f7ef; /* 改为浅绿色，更醒目 */
+            border-radius: 8px;
+            text-align: center;
+            display: none; /* 默认隐藏 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>当你表达观点时，你更像哪一种人？</h1>
+        <p style="text-align:center; color: #666;">一个关于表达姿态与思想位置的测试</p >
+
+        <form id="testForm">
+            <!-- 问题 1 -->
+            <div class="question">
+                <p>1. 针对网络舆论翻车事件，你通常会先：</p >
+                <label><input type="radio" name="q1" value="A"> 判断事实与逻辑</label>
+
+                <label><input type="radio" name="q1" value="B"> 分析背后的结构</label>
+
+                <label><input type="radio" name="q1" value="C"> 关注现实后果</label>
+
+                <label><input type="radio" name="q1" value="D"> 警惕情绪裹挟</label>
+            </div>
+
+            <!-- 问题 2 -->
+            <div class="question">
+                <p>2. 面对“努力就会成功”的说法：</p >
+                <label><input type="radio" name="q2" value="A"> 看是否自洽</label>
+
+                <label><input type="radio" name="q2" value="B"> 怀疑结构前提</label>
+
+                <label><input type="radio" name="q2" value="C"> 判断是否有用</label>
+
+                <label><input type="radio" name="q2" value="D"> 对叙事保持距离</label>
+            </div>
+
+            <!-- 问题 3 -->
+            <div class="question">
+                <p>3. 公共人物被道德审判时：</p >
+                <label><input type="radio" name="q3" value="A"> 区分事实与价值</label>
+
+                <label><input type="radio" name="q3" value="B"> 看谁在定义道德</label>
+
+                <label><input type="radio" name="q3" value="C"> 评估社会影响</label>
+
+                <label><input type="radio" name="q3" value="D"> 对群体愤怒保持警惕</label>
+            </div>
+
+            <!-- 问题 4 -->
+            <div class="question">
+                <p>4. 社会议题被极端对立化时：</p >
+                <label><input type="radio" name="q4" value="A"> 澄清观点</label>
+
+                <label><input type="radio" name="q4" value="B"> 指出结构矛盾</label>
+
+                <label><input type="radio" name="q4" value="C"> 寻找折中方案</label>
+
+                <label><input type="radio" name="q4" value="D"> 选择退出</label>
+            </div>
+
+            <!-- 问题 5 -->
+            <div class="question">
+                <p>5. 关于“躺平”现象：</p >
+                <label><input type="radio" name="q5" value="A"> 质疑概念泛化</label>
+
+                <label><input type="radio" name="q5" value="B"> 看作结构压力</label>
+
+                <label><input type="radio" name="q5" value="C"> 视为理性选择</label>
+
+                <label><input type="radio" name="q5" value="D"> 关注意义感崩塌</label>
+            </div>
+
+            <button type="button" onclick="calculate()">查看结果</button>
+        </form>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            // 1. 初始化分数
+            let scores = {A: 0, B: 0, C: 0, D: 0};
+
+            // 2. 循环获取每个问题的答案
+            // 注意：i <= 5 对应你现在的5道题
+            for (let i = 1; i <= 5; i++) {
+                // 使用 querySelector 查找当前题目的选中项
+                let questionName = 'q' + i;
+                let selectedOption = document.querySelector('input[name="' + questionName + '"]:checked');
+
+                // 如果用户选择了选项（selectedOption 存在）
+                if (selectedOption) {
+                    let value = selectedOption.value;
+                    scores[value]++; // 对应的字母分数加1
+                }
+            }
+
+            // 3. 找出最高分的选项
+            let maxScore = 0;
+            let winner = "A"; // 默认值
+
+            for (let key in scores) {
+                if (scores[key] > maxScore) {
+                    maxScore = scores[key];
+                    winner = key;
+                }
+            }
+
+            // 4. 根据结果生成文本
+            let resultText = "";
+            switch(winner) {
+                case "A":
+                    resultText = "<h2>🏆 理性规范型</h2><p>你更像 <strong>康德 / 罗尔斯</strong>。</p ><p>注重逻辑自洽与普世规则。</p >";
+                    break;
+                case "B":
+                    resultText = "<h2>🔍 结构怀疑型</h2><p>你更像 <strong>福柯 / 布迪厄</strong>。</p ><p>擅长揭示权力与话语背后的深层结构。</p >";
+                    break;
+                case "C":
+                    resultText = "<h2⚖️ 策略现实型</h2><p>你更像 <strong>韦伯 / 马基雅维利</strong>。</p ><p>关注实际效用与后果，务实理性。</p >";
+                    break;
+                case "D":
+                    resultText = "<h2>🛡️ 情绪警惕型</h2><p>你更像 <strong>阿多诺 / 加缪</strong>。</p ><p>对宏大叙事保持距离，警惕集体情绪。</p >";
+                    break;
+            }
+
+            // 5. 显示结果
+            document.getElementById("result").innerHTML = resultText;
+            document.getElementById("result").style.display = "block"; // 显示 div
+        }
+    </script>
+
+</body>
+</html>
